@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Damascus Certificates × Taʾrīkh al-Islām</title>
+<meta name="description" content="25 Damascus audition certificates (550–700 AH) with participants linked to biographies in al-Dhahabī's Taʾrīkh al-Islām, with a review and export workflow.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f1f5f9; --fg:#ffffff; --text:#1e293b; --muted:#64748b; --border:#cbd5e1; --divider:#e2e8f0;
+  --primary:#0284c7; --primary-600:#0284c7; --primary-700:#0369a1; --primary-50:#f0f9ff; --primary-100:#e0f2fe;
+  --musmi:#dc2626; --reader:#ca8a04; --sami:#7c3aed; --writer:#9333ea; --sanad:#ea580c; --owner:#0f766e; --copyist:#a21caf; --other:#475569;
+  --place:#4d7c0f; --date:#06b6d4;
+  --ok:#16a34a; --ok-bg:#dcfce7; --bad:#dc2626; --bad-bg:#fee2e2; --warn:#b45309; --warn-bg:#fef3c7; --info-bg:#e0f2fe;
+  --shadow:1px 1px 5px 0 rgba(0,0,0,.16);
+  --ar:"Noto Naskh Arabic","Amiri","Geeza Pro","Arial",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f172a; --fg:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --border:#475569; --divider:#334155;
+    --primary:#38bdf8; --primary-600:#0284c7; --primary-700:#7dd3fc; --primary-50:#0c4a6e; --primary-100:#075985;
+    --musmi:#f87171; --reader:#facc15; --sami:#a78bfa; --writer:#c084fc; --sanad:#fb923c; --owner:#2dd4bf; --copyist:#e879f9; --other:#94a3b8;
+    --place:#a3e635; --date:#22d3ee;
+    --ok:#4ade80; --ok-bg:#14532d; --bad:#f87171; --bad-bg:#7f1d1d; --warn:#fbbf24; --warn-bg:#78350f; --info-bg:#0c4a6e;
+    --shadow:1px 1px 5px 0 rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+    --bg:#0f172a; --fg:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --border:#475569; --divider:#334155;
+    --primary:#38bdf8; --primary-600:#0284c7; --primary-700:#7dd3fc; --primary-50:#0c4a6e; --primary-100:#075985;
+    --musmi:#f87171; --reader:#facc15; --sami:#a78bfa; --writer:#c084fc; --sanad:#fb923c; --owner:#2dd4bf; --copyist:#e879f9; --other:#94a3b8;
+    --place:#a3e635; --date:#22d3ee;
+    --ok:#4ade80; --ok-bg:#14532d; --bad:#f87171; --bad-bg:#7f1d1d; --warn:#fbbf24; --warn-bg:#78350f; --info-bg:#0c4a6e;
+    --shadow:1px 1px 5px 0 rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:Nunito,ui-sans-serif,system-ui,sans-serif;font-size:.9rem;line-height:1.45;min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--primary)}
+button{font:inherit;cursor:pointer}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 16px}
+/* header modelled on the ACP banner header */
+header.acp-header{position:relative;background:#3b2f25 url('img/banner_wetzstein_ii_150_1v.jpg') center/cover no-repeat;color:#fff}
+header.acp-header::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,23,42,.35),rgba(15,23,42,.55))}
+.hdr{position:relative;padding:28px 0 40px}
+.navpill{display:flex;flex-wrap:wrap;gap:4px 20px;width:fit-content;background:#fff;border-radius:6px;padding:10px 20px;margin-bottom:36px}
+.navpill button{background:none;border:0;color:#6b7280;padding:0}
+.navpill button:hover,.navpill button.active{color:#0369a1}
+.hdr h1{font-weight:800;font-size:2.1rem;line-height:1.15;margin:0 0 8px;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.hdr p{margin:0;max-width:760px;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.searchrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px;align-items:stretch}
+.input-group{display:flex;flex:1 1 380px;max-width:560px}
+.input-group input{flex:1;min-width:0;border:0;border-radius:6px 0 0 6px;padding:12px;font-size:1.05rem;color:#374151;font-family:Nunito,var(--ar)}
+.input-group .addon{background:#0284c7;color:#fff;border-radius:0 6px 6px 0;padding:0 16px;display:flex;align-items:center}
+.credit{position:absolute;right:8px;bottom:4px;font-size:.7rem;color:#e5e7eb;opacity:.85}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;border-radius:6px;border:1px solid var(--primary);background:var(--primary-600);color:#fff;padding:7px 14px;font-weight:600}
+.btn:hover{filter:brightness(1.08)}
+.btn_outlined{background:transparent;color:var(--primary)}
+.btn_outlined:hover{background:var(--primary-50)}
+.btn_xs{padding:3px 10px;font-size:.8rem}
+.btn[disabled]{opacity:.45;cursor:default}
+main{flex:1;padding:20px 0 40px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.toolbar .spacer{flex:1}
+.stats{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:.85rem}
+.stats b{color:var(--text)}
+.progress{height:6px;background:var(--divider);border-radius:3px;overflow:hidden;width:160px;display:inline-block;vertical-align:middle}
+.progress>i{display:block;height:100%;background:var(--ok)}
+.card{background:var(--fg);border-radius:10px;box-shadow:var(--shadow)}
+.cert{padding:20px;margin:10px 0}
+.h4{font-weight:700;color:var(--primary);font-size:1.05rem;margin:0}
+.muted{color:var(--muted)}
+.cert-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+.cert-body{display:flex;flex-direction:column;gap:14px;margin-top:10px}
+@media(min-width:900px){.cert-body{flex-direction:row}.cert-side{width:250px;flex:none}}
+.rtl{direction:rtl;text-align:right;font-family:var(--ar)}
+.work{font-family:var(--ar);font-weight:700;color:var(--primary);font-size:1.25rem;margin:0}
+.author{font-family:var(--ar);color:var(--muted);margin:2px 0 0}
+.ctext{font-family:var(--ar);font-size:1.12rem;line-height:2.15;margin:12px 0 0;white-space:pre-wrap;word-wrap:break-word}
+.ann{border-radius:3px;padding:0 1px}
+.ann.person{cursor:pointer;font-weight:600}
+.ann.person:hover,.ann.person.hl{background:var(--primary-100)}
+.ann.person.flash{animation:flash 1.2s ease-out}
+@keyframes flash{0%{background:var(--warn-bg)}100%{background:transparent}}
+.ann.place{color:var(--place)} .ann.date{color:var(--date)}
+.ti-mark{font-family:Nunito,sans-serif;font-size:.62rem;font-weight:800;vertical-align:super;margin-inline-start:2px;padding:0 3px;border-radius:3px;border:1px solid currentColor;line-height:1.2}
+.ti-mark.confirmed{background:var(--ok);color:#fff;border-color:var(--ok)}
+.ti-mark.rejected{text-decoration:line-through;opacity:.6}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;direction:rtl}
+.chip{font-family:var(--ar);border:1px solid currentColor;background:transparent;border-radius:6px;padding:2px 8px;font-size:.92rem;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip:hover{background:var(--primary-50)}
+.side-box{border:1px solid var(--divider);border-radius:8px;padding:12px;font-size:.84rem}
+.side-box dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:0}
+.side-box dt{color:var(--muted)} .side-box dd{margin:0;font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.78rem;margin-top:6px}
+.legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;background:currentColor;margin-right:4px;vertical-align:-1px}
+.r-musmi{color:var(--musmi)} .r-reader{color:var(--reader)} .r-sami{color:var(--sami)} .r-writer{color:var(--writer)} .r-sanad_al_musmi{color:var(--sanad)} .r-owner{color:var(--owner)} .r-copyist{color:var(--copyist)} .r-other,.r-registrar_of_names{color:var(--other)}
+.c-place{color:var(--place)} .c-date{color:var(--date)}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(15,23,42,.35);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100vh;width:min(560px,100vw);background:var(--fg);box-shadow:-4px 0 18px rgba(0,0,0,.2);transform:translateX(100%);transition:transform .22s ease;z-index:50;display:flex;flex-direction:column}
+.drawer.open{transform:none}
+.dr-head{padding:14px 18px;border-bottom:1px solid var(--divider);display:flex;gap:10px;align-items:flex-start}
+.dr-head .ttl{flex:1;min-width:0}
+.dr-body{padding:16px 18px;overflow:auto;flex:1}
+.dr-foot{padding:10px 18px;border-top:1px solid var(--divider);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.x{background:none;border:0;font-size:1.5rem;line-height:1;color:var(--muted);padding:0 4px}
+.mention{font-family:var(--ar);font-size:1.25rem;font-weight:700;direction:rtl;text-align:right}
+.rolechips{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.rolechip{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;border:1px solid currentColor;border-radius:4px;padding:0 5px}
+.sec{margin:14px 0}
+.sec h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:0 0 6px}
+.expanded{background:var(--primary-50);border-radius:6px;padding:8px 10px}
+.expanded .ar{font-family:var(--ar);font-size:1.05rem;direction:rtl;text-align:right}
+.badge{display:inline-block;font-size:.72rem;font-weight:800;border-radius:999px;padding:1px 8px;text-transform:uppercase;letter-spacing:.03em}
+.b-confident{background:var(--ok-bg);color:var(--ok)} .b-probable{background:var(--warn-bg);color:var(--warn)}
+.b-none,.b-ambiguous,.b-unreviewed{background:var(--divider);color:var(--muted)}
+.b-confirmed{background:var(--ok);color:#fff} .b-rejected{background:var(--bad);color:#fff} .b-replaced{background:var(--primary-600);color:#fff}
+.matchbox{border:1px solid var(--border);border-radius:8px;padding:12px}
+.matchbox .bn{font-family:var(--ar);font-size:1.12rem;font-weight:700;direction:rtl;text-align:right;color:var(--primary)}
+.uri{font-family:ui-monospace,Menlo,monospace;font-size:.78rem;background:var(--bg);border-radius:4px;padding:2px 6px;word-break:break-all}
+.just{margin-top:8px;font-size:.86rem}
+.biotext{font-family:var(--ar);font-size:1.08rem;line-height:2;direction:rtl;text-align:justify;white-space:pre-wrap}
+.biotext .nm{color:var(--primary);font-weight:700}
+.biotext mark{background:var(--warn-bg);color:inherit;border-radius:3px}
+.alt{display:flex;gap:8px;align-items:flex-start;border-top:1px dashed var(--divider);padding:8px 0}
+.alt .an{flex:1;min-width:0;font-family:var(--ar);direction:rtl;text-align:right}
+.alt .meta{font-size:.75rem;color:var(--muted);direction:ltr;text-align:left;font-family:Nunito,sans-serif}
+.alt.current{background:var(--primary-50);border-radius:6px;padding:8px}
+textarea,input[type=text]{font:inherit;color:var(--text);background:var(--fg);border:1px solid var(--border);border-radius:6px;padding:6px 8px;width:100%}
+.btn-ok{background:var(--ok);border-color:var(--ok)} .btn-bad{background:var(--bad);border-color:var(--bad)}
+.kbd{font-family:ui-monospace,monospace;font-size:.7rem;border:1px solid var(--border);border-radius:3px;padding:0 3px;color:var(--muted)}
+/* modal */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:60;background:rgba(15,23,42,.45);padding:16px}
+.modal.open{display:flex}
+.modal .card{max-width:760px;width:100%;max-height:90vh;overflow:auto;padding:22px}
+.modal h2{margin:0 0 10px;color:var(--primary)}
+.modal table{border-collapse:collapse;font-size:.85rem;margin:8px 0}
+.modal td,.modal th{border-bottom:1px solid var(--divider);padding:4px 10px;text-align:left}
+footer{border-top:1px solid var(--divider);padding:18px 0;color:var(--muted);font-size:.8rem}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#1e293b;color:#fff;padding:8px 14px;border-radius:6px;opacity:0;transition:opacity .2s;z-index:70;pointer-events:none}
+.toast.show{opacity:1}
+select{font:inherit;border:1px solid var(--border);background:var(--fg);color:var(--text);border-radius:6px;padding:4px 6px}
+@media(max-width:600px){.hdr h1{font-size:1.5rem}.navpill{gap:4px 14px;padding:8px 14px}.cert{padding:14px}}
+</style>
+</head>
+<body>
+<header class="acp-header">
+  <div class="container hdr">
+    <nav class="navpill" aria-label="Main">
+      <button data-nav="certs" class="active">Certificates</button>
+      <button data-nav="about">About &amp; method</button>
+      <button data-nav="export">Review &amp; export</button>
+      <button data-nav="theme" title="Toggle light/dark">Theme</button>
+    </nav>
+    <h1>Damascus Certificates × Taʾrīkh al-Islām</h1>
+    <p>25 audition certificates recording sessions held in Damascus between 550 and 700 AH, drawn from the Audition Certificates Platform dataset. Participants are linked to biographies in al-Dhahabī's <i>Taʾrīkh al-Islām</i>. Click a highlighted name to read the matched biography and confirm or reject the match.</p>
+    <div class="searchrow">
+      <div class="input-group">
+        <input id="q" type="search" placeholder="Search certificates, names, works (Arabic or Latin)…" autocomplete="off">
+        <span class="addon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+      </div>
+    </div>
+  </div>
+  <div class="credit">Background image source: MS Staatsbibliothek Berlin, Wetzstein II 150, 1v</div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="toolbar">
+      <button class="btn btn_outlined btn_xs" id="reset">Reset all filters</button>
+      <select id="filter" aria-label="Filter">
+        <option value="all">All certificates</option>
+        <option value="pending">With unreviewed proposals</option>
+        <option value="done">Fully reviewed</option>
+      </select>
+      <select id="sort" aria-label="Sort">
+        <option value="year">Sort: date of session</option>
+        <option value="matches">Sort: number of matches</option>
+        <option value="ms">Sort: manuscript</option>
+      </select>
+      <span class="spacer"></span>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div id="list"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    Certificates: <a href="https://www.audition-certificates-platform.org/" target="_blank" rel="noopener">Audition Certificates Platform</a> (CSMC, Universität Hamburg), data release <code>msnotesannotator_audition_certificates_data</code>.
+    Biographies: al-Dhahabī, <i>Taʾrīkh al-Islām</i>, OpenITI text <code>0748Dhahabi.TarikhIslam.MGR20180917-ara1</code>.
+    This is an independent research prototype whose layout follows the ACP; it is not affiliated with the platform.
+    Matches were proposed by an onomastic matcher and adjudicated by a reviewer (Claude), and they await scholarly review.
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="Person and biography">
+  <div class="dr-head">
+    <div class="ttl" id="drTitle"></div>
+    <button class="x" id="drClose" aria-label="Close">×</button>
+  </div>
+  <div class="dr-body" id="drBody"></div>
+  <div class="dr-foot" id="drFoot"></div>
+</aside>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true"><div class="card" id="modalCard"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+'use strict';
+const D = window.ACP_DATA;
+const PFX = D.uriPrefix;
+const STORE_KEY = 'acp-ti-review-v1';
+const ROLE_LABEL = {musmi:"musmiʿ",reader:"reader",sami:"listener (sāmiʿ)",writer:"writer of session",sanad_al_musmi:"sanad of the musmiʿ",owner:"owner",copyist:"copyist",other:"other",registrar_of_names:"registrar of names"};
+const ROLE_ORDER = ['musmi','sanad_al_musmi','reader','writer','copyist','owner','sami','other'];
+const CONF_LABEL = {confident:'confident',probable:'probable',ambiguous:'ambiguous',none:'no match'};
+const VENUE = {umayyad_mosque:'Umayyad Mosque',private_house:'private house',safh_quasyun:'Ṣafḥ Qāsiyūn',muzaffari_mosque:'al-Muẓaffarī Mosque',diyaiya_madrasa:'al-Ḍiyāʾiyya',
+  'dar_al-hadith_al-ashrafiya':'Dār al-Ḥadīth al-Ashrafiyya',nuriya_madrasa:'al-Nūriyya',khatuniya_madrasa:'al-Khātūniyya',aziziya_madrasa:'al-ʿAzīziyya',umariya_madrasa:'al-ʿUmariyya',
+  ustadar_madrasa:'Madrasat Ustādh al-Dār','darb_al-akfaniyin':'Darb al-Akfāniyyīn',turbat_sarimiya:'Turbat al-Ṣārimiyya','dayr_al-salihiyin':'Dayr al-Ṣāliḥīn',sahibiya_madrasa:'al-Ṣāḥibiyya','al-mizza':'al-Mizza'};
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm = s => String(s||'').replace(/[ً-ْٰـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').toLowerCase();
+
+/* ---------- review state (browser-local) ---------- */
+let S = {reviewer:'', items:{}};
+try{ const raw = localStorage.getItem(STORE_KEY); if(raw) S = Object.assign(S, JSON.parse(raw)); }catch(e){}
+function save(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(S)); }catch(e){ toast('Could not save locally; export your work.'); } }
+
+/* ---------- indexes ---------- */
+const PERSONS = {}; // guid -> {cert, p}
+D.certs.forEach(c => c.persons.forEach(p => { PERSONS[p.id] = {cert:c, p}; }));
+const reviewable = p => !!(p.proposal && p.proposal.uid) || (p.cands && p.cands.length>0);
+function state(p){
+  // effective state of a person: {status, uid}
+  const r = S.items[p.id];
+  if(r) return {status:r.status, uid: r.status==='rejected' ? null : r.uid, rec:r};
+  if(p.proposal && p.proposal.uid) return {status:'proposed', uid:p.proposal.uid};
+  return {status: p.cands && p.cands.length ? 'unmatched' : 'nocands', uid:null};
+}
+function certStats(c){
+  let prop=0, rev=0, conf=0, matched=0;
+  c.persons.forEach(p=>{ const st=state(p); if(p.proposal&&p.proposal.uid) prop++; if(S.items[p.id]) rev++; if(st.status==='confirmed'||st.status==='replaced') conf++; if(st.uid) matched++; });
+  return {prop, rev, conf, matched, n:c.persons.length, pendingProp: c.persons.filter(p=>p.proposal&&p.proposal.uid&&!S.items[p.id]).length};
+}
+function placeLabel(c){
+  const pl = c.anns.find(a=>a.type==='place');
+  const loc = pl && pl.loc && pl.loc[0] || [];
+  const v = loc[2] ? (VENUE[loc[2]] || loc[2].replace(/_/g,' ')) : '';
+  return 'Bilad al-Sham, Damascus' + (v ? ' — '+v : '');
+}
+function dateLabel(c){ return c.year ? c.year+' (hijri)' : 'undated'; }
+function msLabel(c){ return [c.library, c.classmark, c.folio ? 'fol. '+c.folio : ''].filter(Boolean).join(' '); }
+function mainRole(p){ return ROLE_ORDER.find(r=>p.roles.includes(r)) || (p.roles[0]||'other'); }
+
+/* ---------- rendering: certificates ---------- */
+function renderLegend(){
+  $('#legend').innerHTML = ['musmi','sanad_al_musmi','reader','writer','sami','owner','copyist'].map(r=>`<span class="r-${r}">${ROLE_LABEL[r]}</span>`).join('')
+    + `<span class="c-place">place</span><span class="c-date">date</span>`
+    + `<span class="muted" style="margin-left:6px">Superscript <b>TI</b> marks a proposed biography. It turns solid green once a reviewer confirms it.</span>`;
+}
+function annSpan(c,a,inner){
+  if(a.type!=='person') return `<span class="ann ${a.type}">${inner}</span>`;
+  const P = PERSONS[a.id]; const p = P && P.p; const r = p ? mainRole(p) : 'other';
+  const st = p ? state(p) : {status:'nocands'};
+  let mark='';
+  if(st.status==='confirmed'||st.status==='replaced') mark=`<sup class="ti-mark confirmed">TI</sup>`;
+  else if(st.status==='proposed') mark=`<sup class="ti-mark">TI</sup>`;
+  else if(st.status==='rejected') mark=`<sup class="ti-mark rejected">TI</sup>`;
+  return `<span class="ann person r-${r}" data-pid="${a.id}" title="${esc((p?p.roles.map(x=>ROLE_LABEL[x]||x).join(', '):''))}">${inner}${mark}</span>`;
+}
+function renderText(c){
+  // annotations may nest (e.g. a father's name inside his son's nasab); partial overlaps are dropped
+  const t = c.text;
+  const anns = c.anns.filter(a=>a.e<=t.length).sort((a,b)=>a.s-b.s||b.e-a.e);
+  function seg(from,to,list){
+    let out='', pos=from, i=0;
+    while(i<list.length){
+      const a=list[i];
+      if(a.s<pos){ i++; continue; }
+      const kids=[]; let j=i+1;
+      while(j<list.length && list[j].s<a.e){ if(list[j].e<=a.e) kids.push(list[j]); j++; }
+      out += esc(t.slice(pos,a.s)) + annSpan(c,a,seg(a.s,a.e,kids));
+      pos=a.e; i=j;
+    }
+    return out + esc(t.slice(pos,to));
+  }
+  return seg(0,t.length,anns);
+}
+function renderCert(c){
+  const st = certStats(c);
+  const chips = c.persons.map(p=>{ const r=mainRole(p); const s=state(p); const tag = s.uid ? ' ✦' : '';
+    return `<button class="chip r-${r}" data-pid="${p.id}" title="${esc(p.roles.map(x=>ROLE_LABEL[x]||x).join(', '))}">${esc(p.text)}${tag}</button>`; }).join('');
+  const pct = st.prop ? Math.round(100*c.persons.filter(p=>p.proposal&&p.proposal.uid&&S.items[p.id]).length/st.prop) : 100;
+  return `<article class="card cert" id="c-${c.id}">
+    <div class="cert-head"><div>
+      <p class="h4">${esc(msLabel(c))}</p>
+      <p class="muted" style="margin:2px 0 0">${esc(placeLabel(c))}, ${esc(dateLabel(c))}</p></div>
+      <div class="muted" style="font-size:.78rem">${esc(c.id.replace('msnote_auditioncertificate_',''))}</div>
+    </div>
+    <div class="cert-body">
+      <div class="rtl" style="flex:1;min-width:0">
+        <p class="work">${esc(c.work||'—')}</p>
+        <p class="author">${esc(c.author||'')}</p>
+        <div class="ctext">${renderText(c)}</div>
+        <div class="chips">${chips}</div>
+      </div>
+      <div class="cert-side"><div class="side-box">
+        <dl>
+          <dt>Participants</dt><dd>${st.n}</dd>
+          <dt>Type</dt><dd>${esc((c.type||[]).map(t=>({qira:'Qirāʾa',sama:'Samāʿ'}[t]||t)).join(', ')||'—')}</dd>
+          <dt>Proposed</dt><dd>${st.prop}</dd>
+          <dt>Reviewed</dt><dd>${c.persons.filter(p=>p.proposal&&p.proposal.uid&&S.items[p.id]).length} / ${st.prop}</dd>
+          <dt>Linked now</dt><dd>${st.matched}</dd>
+        </dl>
+        <div class="progress" style="width:100%;margin-top:8px"><i style="width:${pct}%"></i></div>
+        ${c.link ? `<p style="margin:10px 0 0"><a href="${esc(c.link)}" target="_blank" rel="noopener">Manuscript / catalogue ↗</a></p>`:''}
+      </div></div>
+    </div>
+  </article>`;
+}
+function matchesQuery(c,q){
+  if(!q) return true;
+  const hay = norm([c.text,c.work,c.author,c.library,c.classmark,c.id,c.year].join(' ') + ' ' + c.persons.map(p=>{const s=state(p); const b=s.uid&&D.bios[s.uid]; return (p.expanded||'')+' '+(b?b.name:'');}).join(' '));
+  return norm(q).split(/\s+/).every(w=>hay.includes(w));
+}
+function renderList(){
+  const q = $('#q').value.trim(), f=$('#filter').value, so=$('#sort').value;
+  let L = D.certs.filter(c=>matchesQuery(c,q)).filter(c=>{ const s=certStats(c); return f==='all' || (f==='pending' ? s.pendingProp>0 : s.pendingProp===0); });
+  L.sort((a,b)=> so==='year' ? (a.year||0)-(b.year||0) : so==='matches' ? certStats(b).matched-certStats(a).matched : msLabel(a).localeCompare(msLabel(b)));
+  $('#list').innerHTML = L.length ? L.map(renderCert).join('') : `<div class="empty card">No certificates match.</div>`;
+  renderStats();
+}
+function renderStats(){
+  let n=0, prop=0, rev=0, conf=0, rej=0, rep=0;
+  D.certs.forEach(c=>c.persons.forEach(p=>{ n++; if(p.proposal&&p.proposal.uid) prop++; const r=S.items[p.id]; if(r){ rev++; if(r.status==='confirmed')conf++; if(r.status==='rejected')rej++; if(r.status==='replaced')rep++; } }));
+  const pr = prop ? Math.round(100*D.certs.reduce((k,c)=>k+c.persons.filter(p=>p.proposal&&p.proposal.uid&&S.items[p.id]).length,0)/prop) : 0;
+  $('#stats').innerHTML = `<span><b>${D.certs.length}</b> certificates</span><span><b>${n}</b> persons</span><span><b>${prop}</b> proposed matches</span>
+    <span>reviewed <b>${rev}</b> (✓${conf} ✗${rej} ↺${rep})</span><span class="progress" title="${pr}% of proposals reviewed"><i style="width:${pr}%"></i></span>`;
+}
+
+/* ---------- drawer: person + biography ---------- */
+let current = null, previewUid = null;
+function openPerson(pid, keepPreview){
+  const P = PERSONS[pid]; if(!P) return;
+  current = pid; if(!keepPreview) previewUid = null;
+  const {cert:c, p} = P; const st = state(p);
+  document.querySelectorAll('.ann.person.hl').forEach(e=>e.classList.remove('hl'));
+  const el = document.querySelector(`#c-${CSS.escape(c.id)} .ann.person[data-pid="${pid}"]`); if(el) el.classList.add('hl');
+  const role = mainRole(p);
+  $('#drTitle').innerHTML = `<div class="mention r-${role}">${esc(p.text)}</div>
+    <div class="rolechips">${p.roles.map(r=>`<span class="rolechip r-${r}">${esc(ROLE_LABEL[r]||r)}</span>`).join('')}</div>
+    <div class="muted" style="font-size:.78rem;margin-top:4px">${esc(msLabel(c))} · ${esc(dateLabel(c))}</div>`;
+  const shownUid = previewUid || st.uid;
+  let h = '';
+  if(p.expanded) h += `<div class="sec"><h3>Name as resolved from the certificate</h3><div class="expanded"><div class="ar">${esc(p.expanded)}</div><div class="muted" style="font-size:.8rem;margin-top:3px">${esc(p.expNote||'')}</div></div></div>`;
+  // proposal summary
+  const pr = p.proposal;
+  h += `<div class="sec"><h3>Proposed identification</h3>`;
+  if(pr){
+    h += `<div><span class="badge b-${esc(pr.conf)}">${esc(CONF_LABEL[pr.conf]||pr.conf)}</span> ${statusBadge(p)}</div>`;
+    h += `<p class="just">${esc(pr.note)}</p>`;
+  } else {
+    h += `<div><span class="badge b-unreviewed">no proposal</span> ${statusBadge(p)}</div><p class="just muted">${p.cands.length ? 'No candidate was judged close enough. The candidates below are shown for manual review.' : 'No candidate biography was found within the chronological window. The person may have died after 700 AH, when Taʾrīkh al-Islām ends, or may simply not be recorded.'}</p>`;
+  }
+  h += `</div>`;
+  if(shownUid && D.bios[shownUid]){
+    const b = D.bios[shownUid];
+    const isPrev = previewUid && previewUid!==st.uid;
+    h += `<div class="sec"><h3>${isPrev?'Previewing candidate':'Matched biography'}</h3><div class="matchbox">
+      <div class="bn">${esc(b.name)}</div>
+      <div class="muted" style="font-size:.82rem;margin-top:4px">d. ${b.d[0]===b.d[1]?b.d[1]:b.d[0]+'–'+b.d[1]} AH · ${esc(b.cat.replace(/\$/g,''))} · <span dir="rtl">${esc(b.h1)}</span></div>
+      <div style="margin-top:6px"><span class="uri">${esc(PFX+shownUid)}</span> <button class="btn btn_outlined btn_xs" data-copy="${esc(PFX+shownUid)}">copy URI</button></div>
+      ${isPrev?`<div style="margin-top:8px"><button class="btn btn_xs" data-use="${shownUid}">Use this biography as the match</button> <button class="btn btn_outlined btn_xs" data-unpreview>Back to current match</button></div>`:''}
+    </div></div>
+    <div class="sec"><h3>Text of the biography — al-Dhahabī, Taʾrīkh al-Islām</h3><div class="biotext">${bioHTML(b)}</div></div>`;
+  }
+  // alternatives
+  if(p.cands.length){
+    h += `<div class="sec"><h3>Candidates from the matcher</h3>${p.cands.map(cd=>{ const b=D.bios[cd.uid]; if(!b) return '';
+      const cur = cd.uid===st.uid; const isProp = pr && pr.uid===cd.uid;
+      return `<div class="alt ${cur?'current':''}"><div class="an">${esc(b.name.slice(0,140))}${b.name.length>140?'…':''}
+        <div class="meta">d. ${b.d[1]} · score ${cd.score==null?'—':cd.score}${isProp?' · <b>proposed</b>':''}${cur?' · <b>current</b>':''}</div></div>
+        <div style="display:flex;flex-direction:column;gap:4px"><button class="btn btn_outlined btn_xs" data-preview="${cd.uid}">read</button>${cur?'':`<button class="btn btn_xs" data-use="${cd.uid}">use</button>`}</div></div>`; }).join('')}</div>`;
+  }
+  // manual entry + note
+  const rec = S.items[p.id];
+  h += `<div class="sec"><h3>Reviewer note</h3><textarea id="rnote" rows="2" placeholder="Optional note saved with your decision">${esc(rec&&rec.note||'')}</textarea></div>
+    <div class="sec"><h3>Link a different biography by URI</h3><div style="display:flex;gap:6px"><input type="text" id="manualUri" placeholder="${esc(PFX)}…"><button class="btn btn_xs" id="manualGo">Link</button></div>
+    <div class="muted" style="font-size:.76rem;margin-top:3px">Only biographies bundled with this sample can be shown, but any Taʾrīkh al-Islām URI is accepted and exported.</div></div>`;
+  $('#drBody').innerHTML = h; $('#drBody').scrollTop = 0;
+  const canConfirm = !!st.uid && st.status!=='confirmed' && st.status!=='replaced';
+  $('#drFoot').innerHTML = `<button class="btn btn-ok" id="bConfirm" ${st.uid?'':'disabled'}>✓ Confirm${st.status==='confirmed'||st.status==='replaced'?'ed':''}</button>
+    <button class="btn btn-bad" id="bReject" ${(st.uid||p.proposal&&p.proposal.uid)?'':'disabled'}>✗ Reject</button>
+    <button class="btn btn_outlined" id="bReset" ${rec?'':'disabled'}>Reset</button>
+    <span style="flex:1"></span>
+    <button class="btn btn_outlined btn_xs" id="bPrev">‹ prev</button><button class="btn btn_outlined btn_xs" id="bNext">next unreviewed ›</button>
+    <span class="muted" style="font-size:.72rem;width:100%">Keys: <span class="kbd">c</span> confirm · <span class="kbd">r</span> reject · <span class="kbd">n</span> next unreviewed · <span class="kbd">Esc</span> close</span>`;
+  $('#drawer').classList.add('open'); $('#scrim').classList.add('open'); $('#drawer').setAttribute('aria-hidden','false');
+  history.replaceState(null,'',`#${encodeURIComponent(c.id)}/${pid}`);
+}
+function statusBadge(p){
+  const r=S.items[p.id]; if(!r) return `<span class="badge b-unreviewed">unreviewed</span>`;
+  return `<span class="badge b-${r.status}">${r.status}</span> <span class="muted" style="font-size:.75rem">${esc(r.reviewer||'')} ${esc((r.ts||'').slice(0,10))}</span>`;
+}
+function bioHTML(b){
+  const t = b.text; const i = t.indexOf(b.name);
+  let html = i===0 ? `<span class="nm">${esc(b.name)}</span>${esc(t.slice(b.name.length))}` : esc(t);
+  return html;
+}
+function closeDrawer(){
+  $('#drawer').classList.remove('open'); $('#scrim').classList.remove('open'); $('#drawer').setAttribute('aria-hidden','true');
+  document.querySelectorAll('.ann.person.hl').forEach(e=>e.classList.remove('hl')); current=null;
+  history.replaceState(null,'',location.pathname+location.search);
+}
+function ensureReviewer(){
+  if(S.reviewer) return true;
+  const n = prompt('Your name or initials (stored with your review decisions):','');
+  if(n===null) return false; S.reviewer = n.trim() || 'anonymous'; save(); return true;
+}
+function decide(status, uid){
+  const P = PERSONS[current]; if(!P) return; if(!ensureReviewer()) return;
+  const p = P.p; const note = ($('#rnote')||{}).value || '';
+  if(status==='reset'){ delete S.items[p.id]; }
+  else S.items[p.id] = {status, uid: uid||null, note, reviewer:S.reviewer, ts:new Date().toISOString()};
+  save(); refreshCert(P.cert); renderStats(); openPerson(p.id);
+  toast(status==='reset' ? 'Decision cleared' : `Saved: ${status}`);
+}
+function refreshCert(c){
+  const el = document.getElementById('c-'+c.id); if(!el) return;
+  const tmp = document.createElement('div'); tmp.innerHTML = renderCert(c); el.replaceWith(tmp.firstElementChild);
+}
+function orderedPersons(){ const out=[]; [...document.querySelectorAll('#list .cert')].forEach(el=>{ const c=D.certs.find(x=>'c-'+x.id===el.id); if(c) c.persons.forEach(p=>out.push(p)); }); return out; }
+function nextUnreviewed(dir){
+  const L = orderedPersons(); if(!L.length) return;
+  let i = L.findIndex(p=>p.id===current);
+  for(let k=1;k<=L.length;k++){ const p = L[(i+dir*k+L.length*2)%L.length]; if(p.proposal && p.proposal.uid && !S.items[p.id]){ go(p.id); return; } }
+  toast('No unreviewed proposals left in this view');
+}
+function go(pid){
+  const P=PERSONS[pid]; openPerson(pid);
+  const el=document.querySelector(`#c-${CSS.escape(P.cert.id)} .ann.person[data-pid="${pid}"]`);
+  if(el){ el.scrollIntoView({block:'center',behavior:'smooth'}); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
+}
+
+/* ---------- export / import ---------- */
+function records(scope){
+  const rows=[];
+  D.certs.forEach(c=>c.persons.forEach(p=>{
+    const r=S.items[p.id]; const st=state(p);
+    if(scope==='reviewed' && !r) return;
+    if(scope==='linked' && !st.uid) return;
+    rows.push({certificate_id:c.id, person_guid:p.id, person_name:p.text, resolved_name:p.expanded||'', roles:p.roles.join('|'),
+      ti_uri: st.uid ? PFX+st.uid : '', rejected_uri: r&&r.status==='rejected'&&r.uid ? PFX+r.uid : '', ti_name: st.uid && D.bios[st.uid] ? D.bios[st.uid].name : '',
+      status: r ? r.status : (p.proposal&&p.proposal.uid ? 'proposed (unreviewed)' : 'no match'),
+      proposed_uri: p.proposal&&p.proposal.uid ? PFX+p.proposal.uid : '', proposal_confidence: p.proposal ? p.proposal.conf : '',
+      proposal_justification: p.proposal ? p.proposal.note : '', reviewer: r?r.reviewer:'', reviewed_at: r?r.ts:'', reviewer_note: r?r.note:'',
+      session_year_ah: c.year||'', manuscript: msLabel(c)});
+  }));
+  return rows;
+}
+function download(name, text, type){
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500);
+}
+function toCSV(rows){
+  if(!rows.length) return '';
+  const cols=Object.keys(rows[0]); const q=v=>{ v=String(v==null?'':v); return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v; };
+  return '﻿'+cols.join(',')+'\n'+rows.map(r=>cols.map(c=>q(r[c])).join(',')).join('\n')+'\n';
+}
+function stamp(){ return new Date().toISOString().slice(0,16).replace(/[:T]/g,'-'); }
+function openExport(){
+  const nRev=Object.keys(S.items).length;
+  $('#modalCard').innerHTML = `<button class="x" style="float:right" data-close>×</button><h2>Review &amp; export</h2>
+  <p>Your decisions are stored in this browser only. Export them regularly. Exports contain one row per person mention, with the certificate ID, the name as written, the resolved name, roles, and the Taʾrīkh al-Islām URI with status.</p>
+  <p>Reviewer: <input type="text" id="revName" style="width:220px" value="${esc(S.reviewer)}"> <button class="btn btn_xs" id="revSave">Save</button></p>
+  <table><tr><th>Scope</th><th>CSV</th><th>JSON</th></tr>
+   <tr><td>Reviewed decisions only (${nRev})</td><td><button class="btn btn_xs" data-exp="reviewed:csv">CSV</button></td><td><button class="btn btn_xs" data-exp="reviewed:json">JSON</button></td></tr>
+   <tr><td>All persons currently linked to a biography</td><td><button class="btn btn_xs" data-exp="linked:csv">CSV</button></td><td><button class="btn btn_xs" data-exp="linked:json">JSON</button></td></tr>
+   <tr><td>All ${Object.keys(PERSONS).length} person mentions</td><td><button class="btn btn_xs" data-exp="all:csv">CSV</button></td><td><button class="btn btn_xs" data-exp="all:json">JSON</button></td></tr></table>
+  <h3 style="margin-top:16px">Import / merge</h3>
+  <p class="muted">Load a JSON export, yours or a colleague's, to restore or merge decisions. Imported decisions overwrite local ones for the same person.</p>
+  <input type="file" id="imp" accept=".json,application/json">
+  <h3 style="margin-top:16px">Clear</h3>
+  <button class="btn btn-bad btn_xs" id="clearAll">Delete all local decisions</button>`;
+  $('#modal').classList.add('open');
+}
+function openAbout(){
+  let nP=0,nProp=0,cnt={confident:0,probable:0,ambiguous:0,none:0},cand=0;
+  D.certs.forEach(c=>c.persons.forEach(p=>{nP++; if(p.cands.length) cand++; if(p.proposal){cnt[p.proposal.conf]=(cnt[p.proposal.conf]||0)+1; if(p.proposal.uid) nProp++;}}));
+  $('#modalCard').innerHTML = `<button class="x" style="float:right" data-close>×</button><h2>About &amp; method</h2>
+  <p><b>Sample.</b> The sample has 25 certificates from the ACP data release whose only tagged place is Damascus or a Damascene venue, dated 550–700 AH. <i>Taʾrīkh al-Islām</i> ends with the deaths of 700 AH. Selection was stratified by quarter-century (4/5/6/6/4 certificates) and capped per venue, with 10–45 participants each and no repeated work.</p>
+  <p><b>Name resolution.</b> Names written only by relation, such as <span dir="rtl">«وابناه يوسف وإبراهيم»</span> or <span dir="rtl">«وأخوه»</span>, were expanded to a full nasab from the certificate's own wording. The expansion and the phrase it rests on are shown in the side panel.</p>
+  <p><b>Matching.</b> Certificate names and al-Dhahabī's biography headers were parsed into ism, nasab chain, kunya, laqab, nisba and shuhra. Candidates had to share the ism or a distinctive shuhra and be alive at the session. For the musmiʿ's sanad, the candidate had to have died within 160 years before it. Birth years parsed from the biographies excluded anyone born after the session. Scores reward agreement in nasab position, laqab, kunya and nisba, and penalise contradictions. A bonus applies when the biography names the certificate's musmiʿ as a teacher.</p>
+  <p><b>Adjudication.</b> Every candidate scoring 5 or more was read against the certificate and its context, and shuhra-only sanad links were resolved by direct search.</p>
+  <ul>
+    <li><b>Confident</b> means the full nasab or rare onomastics agree, the dates fit, and there is usually a corroborating detail such as the teacher, family or place.</li>
+    <li><b>Probable</b> means a good fit with one unexplained discrepancy or a plausible rival.</li>
+    <li><b>Ambiguous</b> means two or more biographies fit equally and the reviewer should choose.</li>
+    <li><b>No match</b> means the candidates contradict the certificate.</li>
+  </ul>
+  <table><tr><th>Person mentions</th><td>${nP}</td></tr><tr><th>With any candidate</th><td>${cand}</td></tr><tr><th>Proposed matches</th><td>${nProp} (confident ${cnt.confident}, probable ${cnt.probable})</td></tr><tr><th>Ambiguous</th><td>${cnt.ambiguous}</td></tr><tr><th>Candidates rejected</th><td>${cnt.none}</td></tr></table>
+  <p><b>Identifiers.</b> Biographies are cited by their OpenITI-style URI, for example <span class="uri">${esc(PFX)}541468440943</span>, which is the record's CID in the source data.</p>
+  <p class="muted">Many listeners, especially children and later generations, have no entry in <i>Taʾrīkh al-Islām</i>. A missing match is often the correct outcome.</p>`;
+  $('#modal').classList.add('open');
+}
+function importJSON(file){
+  const fr=new FileReader(); fr.onload=()=>{ try{
+    const data=JSON.parse(fr.result); const rows=Array.isArray(data)?data:(data.records||[]); let n=0;
+    rows.forEach(r=>{ if(!r.person_guid||!PERSONS[r.person_guid]) return; if(!['confirmed','rejected','replaced'].includes(r.status)) return;
+      S.items[r.person_guid]={status:r.status, uid:r.ti_uri?String(r.ti_uri).replace(PFX,''):null, note:r.reviewer_note||'', reviewer:r.reviewer||'imported', ts:r.reviewed_at||new Date().toISOString()}; n++; });
+    save(); renderList(); toast(`Imported ${n} decisions`); $('#modal').classList.remove('open');
+  }catch(e){ toast('Could not read that file'); } }; fr.readAsText(file);
+}
+
+/* ---------- toast & theme ---------- */
+let tt; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),1800); }
+function applyTheme(){ let th=null; try{th=localStorage.getItem('acp-ti-theme');}catch(e){} if(th) document.documentElement.setAttribute('data-theme',th); }
+applyTheme();
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-pid],[data-nav],[data-preview],[data-use],[data-unpreview],[data-copy],[data-close],[data-exp],#bConfirm,#bReject,#bReset,#bNext,#bPrev,#manualGo,#drClose,#scrim,#reset,#revSave,#clearAll');
+  if(!t){ if(e.target.id==='modal') $('#modal').classList.remove('open'); return; }
+  if(t.dataset.pid){ go(t.dataset.pid); return; }
+  if(t.dataset.nav){ const n=t.dataset.nav; if(n==='about') openAbout(); else if(n==='export') openExport(); else if(n==='theme'){ const cur=document.documentElement.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'); const nx=cur==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',nx); try{localStorage.setItem('acp-ti-theme',nx);}catch(_){} } else { closeDrawer(); window.scrollTo({top:0,behavior:'smooth'}); } return; }
+  if(t.dataset.preview){ previewUid=t.dataset.preview; openPerson(current,true); return; }
+  if(t.hasAttribute('data-unpreview')){ previewUid=null; openPerson(current); return; }
+  if(t.dataset.use){ const P=PERSONS[current]; const u=t.dataset.use; decide(P.p.proposal&&P.p.proposal.uid===u?'confirmed':'replaced', u); return; }
+  if(t.dataset.copy){ navigator.clipboard && navigator.clipboard.writeText(t.dataset.copy).then(()=>toast('URI copied'),()=>toast(t.dataset.copy)); return; }
+  if(t.hasAttribute('data-close')){ $('#modal').classList.remove('open'); return; }
+  if(t.dataset.exp){ const [scope,fmt]=t.dataset.exp.split(':'); const rows=records(scope);
+    if(fmt==='csv') download(`acp-ti-${scope}-${stamp()}.csv`, toCSV(rows), 'text/csv;charset=utf-8');
+    else download(`acp-ti-${scope}-${stamp()}.json`, JSON.stringify({exported:new Date().toISOString(), reviewer:S.reviewer, uri_prefix:PFX, records:rows},null,1), 'application/json');
+    return; }
+  switch(t.id){
+    case 'bConfirm': { const st=state(PERSONS[current].p); const P=PERSONS[current].p; decide(P.proposal&&P.proposal.uid===st.uid?'confirmed':'replaced', st.uid); break; }
+    case 'bReject': decide('rejected', (state(PERSONS[current].p).uid)||(PERSONS[current].p.proposal||{}).uid); break;
+    case 'bReset': decide('reset'); break;
+    case 'bNext': nextUnreviewed(1); break;
+    case 'bPrev': nextUnreviewed(-1); break;
+    case 'manualGo': { let v=($('#manualUri').value||'').trim(); if(!v) return; v=v.replace(PFX,'').replace(/^.*\./,''); if(!/^\d{6,}$/.test(v)){ toast('Expected a Taʾrīkh al-Islām URI or UID'); return; } decide('replaced', v); break; }
+    case 'drClose': case 'scrim': closeDrawer(); break;
+    case 'reset': $('#q').value=''; $('#filter').value='all'; $('#sort').value='year'; renderList(); break;
+    case 'revSave': S.reviewer=$('#revName').value.trim(); save(); toast('Reviewer saved'); break;
+    case 'clearAll': if(confirm('Delete all review decisions stored in this browser? Export first if you need them.')){ S.items={}; save(); renderList(); toast('Cleared'); } break;
+  }
+});
+document.addEventListener('change',e=>{ if(e.target.id==='imp' && e.target.files[0]) importJSON(e.target.files[0]); if(e.target.id==='filter'||e.target.id==='sort') renderList(); });
+let qt; $('#q').addEventListener('input',()=>{ clearTimeout(qt); qt=setTimeout(renderList,200); });
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ if($('#modal').classList.contains('open')) $('#modal').classList.remove('open'); else closeDrawer(); return; }
+  if(!current || /input|textarea|select/i.test(document.activeElement.tagName)) return;
+  if(e.key==='c'){ const b=$('#bConfirm'); if(b&&!b.disabled) b.click(); }
+  else if(e.key==='r'){ const b=$('#bReject'); if(b&&!b.disabled) b.click(); }
+  else if(e.key==='n') nextUnreviewed(1);
+});
+
+/* ---------- init ---------- */
+renderLegend(); renderList();
+if(location.hash.length>1){ const [cid,pid]=decodeURIComponent(location.hash.slice(1)).split('/'); if(pid&&PERSONS[pid]) setTimeout(()=>go(pid),50); else { const el=document.getElementById('c-'+cid); if(el) el.scrollIntoView(); } }
+})();
+</script>
+</body>
+</html>
